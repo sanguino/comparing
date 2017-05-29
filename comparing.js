@@ -6,14 +6,13 @@ var jsdiff = require('diff');
 var options = {
     compareDate: false,
     dateTolerance: 1000,
-    compareContent: true,
+    compareContent: false,
     skipSubdirs: false,
     skipSymlinks: false,
     ignoreCase: false,
-    noDiffSet: false,
-    fileDiferences: true
+    noDiffSet: false
 };
-require('rc')('compare', options);
+require('rc')('comparing', options);
 var format = require('util').format;
 
 var path1 = options.path1;
@@ -26,7 +25,7 @@ dircompare.compare(path1, path2, options).then(function(res){
     console.log('List of differences: ');
 
     res.diffSet.forEach(function (entry) {
-        if (entry.state == 'equal' ||  (!options.fileDiferences && entry.state == 'distinct')) return;
+        if (entry.state == 'equal') return;
 
         console.log('');
         var state = {
@@ -64,26 +63,15 @@ dircompare.compare(path1, path2, options).then(function(res){
     console.log('');
     console.log('');
     console.logGreen('equal: ' + res.equal);
-    if (options.fileDiferences)
+    if (options.compareContent)
         console.logYellow('distinct: ' + res.distinct);
 
     console.logRed('left: ' + res.left);
     console.logRed('right: ' + res.right);
     console.log('');
 
-    console.logBlack(console.bg.red(' Total differences: ' + (options.fileDiferences? res.differences : res.differences - res.distinct) + ' '));
+    console.logBlack(console.bg.red(' Total differences: ' + res.differences + ' '));
 
-    /*
-    console.log('');
-    console.log('');
-    console.log('');
-    console.logWhite(console.bg.green('equal: ' + res.equal));
-    console.logBlack(console.bg.yellow('distinct: ' + res.distinct));
-    console.logBlack(console.bg.red('left: ' + res.left));
-    console.logBlack(console.bg.red('right: ' + res.right));
-    console.log('');
-    console.logBlack(console.bg.red('Total differences: ' + res.differences));
-    */
 
 });
 

@@ -1,0 +1,7 @@
+path1 = "dir1"
+path2 = "dir2"
+
+compareContent = true
+
+includeFilter = ""
+excludeFilter = "node_modules"
