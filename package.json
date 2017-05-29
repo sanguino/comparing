@@ -1,0 +1,19 @@
+{
+  "name": "comparing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compare.js",
+  "dependencies": {
+    "diff": "^3.2.0",
+    "dir-compare": "^1.4.0",
+    "jsdiff": "^1.1.1",
+    "rc": "^1.2.1",
+    "simple-console-color": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
