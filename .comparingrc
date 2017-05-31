@@ -5,3 +5,17 @@ compareContent = true
 
 includeFilter = ""
 excludeFilter = "node_modules"
+
+
+equivalencies = {
+                left: ["hola", "323"],
+                right: ["adios", "3343"]
+}
+
+#compareDate = false
+#dateTolerance = 1000
+#compareContent = false
+#skipSubdirs = false
+#skipSymlinks = false
+#ignoreCase = false
+#noDiffSet = false

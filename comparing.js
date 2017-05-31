@@ -22,7 +22,9 @@ var path2 = options.path2;
 
 dircompare.compare(path1, path2, options).then(function(res){
 
-    console.log('List of differences: ');
+    if (res.diffSet.length > 0) {
+        console.log('List of differences: ');
+    }
 
     res.diffSet.forEach(function (entry) {
         if (entry.state == 'equal') return;
@@ -42,16 +44,17 @@ dircompare.compare(path1, path2, options).then(function(res){
 
         var logText = format('%s(%s) %s %s(%s)', (path1 ? path1 + '/' : '') + name1, entry.type1, state, (path2 ? path2 + '/' : '') + name2, entry.type2);
  
-        if (entry.state === 'distinct') {
+        if (entry.state === 'distinct' && options.compareContent) {
             console.logYellow(logText);
             var file1Str = fs.readFileSync(path1 + '/' + name1).toString();
             var file2Str = fs.readFileSync(path2 + '/' + name2).toString();
-            var diff = jsdiff.diffLines(file1Str, file2Str, {newlineIsToken:true});
+            var diff = jsdiff.diffLines(file1Str, file2Str);
             diff.forEach(function(part){
+                var value = part.value.replace(/(\n|\r)+$/, '');
                 if (part.removed)
-                    console.logRed('     - '+part.value);
+                    console.logRed('     - '+value);
                 if (part.added)
-                    console.logGreen('     + '+part.value);
+                    console.logGreen('     + '+value);
             });
         } else {
             console.logRed(logText);
@@ -61,7 +64,8 @@ dircompare.compare(path1, path2, options).then(function(res){
 
     console.log('');
     console.log('');
-    console.log('');
+    console.log('---------------RESUMEN---------------');
+
     console.logGreen('equal: ' + res.equal);
     if (options.compareContent)
         console.logYellow('distinct: ' + res.distinct);
