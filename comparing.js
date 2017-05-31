@@ -46,9 +46,9 @@ dircompare.compare(path1, path2, options).then(function(res){
  
         if (entry.state === 'distinct' && options.compareContent) {
             console.logYellow(logText);
-            var file1Str = fs.readFileSync(path1 + '/' + name1).toString();
-            var file2Str = fs.readFileSync(path2 + '/' + name2).toString();
-            var diff = jsdiff.diffLines(file1Str, file2Str);
+            var file1Str = fs.readFileSync(path1 + '/' + name1, "utf8").toString();
+            var file2Str = fs.readFileSync(path2 + '/' + name2, "utf8").toString();
+            var diff = jsdiff.diffLines(file1Str, file2Str, {newlineIsToken:true});
             diff.forEach(function(part){
                 var value = part.value.replace(/(\n|\r)+$/, '');
                 if (part.removed)
